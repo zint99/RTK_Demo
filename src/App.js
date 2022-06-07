@@ -1,19 +1,18 @@
-import RtkExamp from './components/RtkExamp/RtkExamp'
+// import RtkExamp from './components/RtkExamp/RtkExamp'
+import { useEffect } from 'react';
+import './App.css'
+import StudentList from './components/StudentList/StudentList';
 import { useGetStudentsQuery } from './store/api/studentApi'
 
 function App() {
-  const { data, isSuccess, isLoading } = useGetStudentsQuery()
+  const { data, isSuccess, isLoading, isError } = useGetStudentsQuery()
 
   return (
     <div className="App">
-      {/* <RtkExamp /> */}
-      {isLoading && <p>数据正在加载中...</p>}
-      {isSuccess && data.data.map(stu => <p key={stu.id}>
-        {stu.attributes.name}---
-        {stu.attributes.gender}---
-        {stu.attributes.age}---
-        {stu.attributes.address}
-      </p>)}
+
+      {isLoading && <h2>加载数据中...</h2>}
+      {isError && <h2>加载数据失败!..</h2>}
+      {isSuccess && <StudentList stus={data} />}
     </div>
   );
 }
